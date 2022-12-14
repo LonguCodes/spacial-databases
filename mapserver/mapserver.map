@@ -1,0 +1,40 @@
+MAP
+    NAME 'map'
+    SIZE 800 650
+    STATUS ON
+    EXTENT -58968 145487 30916 206234
+    UNITS METERS
+    CONFIG "CGI_CONTEXT_URL" "1"
+
+
+    WEB
+        METADATA
+            'wms_title' 'Terrain wms'
+            'wms_srs' 'EPSG:3763 EPSG:4326 EPSG:3857'
+            'wms_enable_request' '*'
+            'wms_onlineresource' 'http://54.37.13.53/mapservices/srtm'
+        END
+    END
+
+    
+
+    LAYER
+
+        NAME srtm
+        TYPE raster
+        STATUS ON
+        DATA "PG:host=postgis port=5432 dbname=lab6 user=postgres password=postgres schema=rasters table=dem column=rast mode=2"
+        PROCESSING "SCALE=AUTO"
+        PROCESSING "NODATA=20"
+        PROCESSING "CLOSE_CONNECTION=DEFER"
+        OFFSITE 0 0 0
+
+        PROJECTION
+            'init=epsg:3763'
+        END
+
+        METADATA
+            'wms_title' 'srtm'
+        END
+    END
+END
